@@ -15,7 +15,7 @@
 `npm install @antv/adjust`
 
 ```js
-import adjust from '@antv/adjust';
+import Adjust from '@antv/adjust';
 
 ```
 
