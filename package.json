@@ -1,7 +1,7 @@
 {
   "name": "@antv/adjust",
   "version": "0.0.1",
-  "description": "",
+  "description": "Data Adjust module for G2, F2.",
   "browser": "build/adjust.js",
   "main": "build/adjust.js",
   "module": "lib/index.js",
@@ -15,7 +15,9 @@
   "keywords": [
     "antv",
     "adjust",
-    "adjust"
+    "adjust",
+    "g2",
+    "f2"
   ],
   "author": "https://github.com/orgs/antvis/people",
   "license": "MIT",
