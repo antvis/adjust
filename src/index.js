@@ -2,14 +2,17 @@
 const mix = require('@antv/util/src/mix');
 const Adjust = require('./base');
 const Dodge = require('./dodge');
+const Stack = require('./stack');
 const AdjustMixin = require('./mixin/adjust');
 const DodgeMixin = require('./mixin/dodge');
+const StackMixin = require('./mixin/stack');
 mix(Adjust.prototype, AdjustMixin);
 mix(Dodge.prototype, AdjustMixin, DodgeMixin);
+mix(Stack.prototype, StackMixin);
 
-Adjust.Stack = require('./stack');
 Adjust.Jitter = require('./jitter');
 Adjust.Symmetric = require('./symmetric');
 Adjust.Dodge = Dodge;
+Adjust.Stack = Stack;
 
 module.exports = Adjust;
