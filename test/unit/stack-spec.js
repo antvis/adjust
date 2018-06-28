@@ -116,6 +116,34 @@ describe('stack adjust', function() {
     });
   });
 
+  describe('stack with null or undefined', function() {
+    it('adjust result', function() {
+      const data = [
+        { a: 1, c: 1 },
+        { a: 1, b: null, c: 2 },
+        { a: 2, b: 1, c: 1 },
+        { a: 2, b: 4, c: 2 },
+        { a: 3, b: 0, c: 1 },
+        { a: 3, b: 1, c: 2 }
+      ];
+      const adjust = new Adjust.Stack({
+        xField: 'a',
+        yField: 'b'
+      });
+      adjust.processAdjust([ data ]);
+      const obj1 = data[0];
+      expect(obj1.b).to.be.undefined;
+
+      const obj2 = data[1];
+      expect(obj2.b).to.be.null;
+
+      const obj3 = data[2];
+      expect(obj3.b.length).to.be.equal(2);
+      expect(obj3.b[0]).to.be.equal(0);
+      expect(obj3.b[1]).to.be.equal(1);
+    });
+  });
+
   describe('stack with 0', function() {
     const data = [{
       a: 1,
