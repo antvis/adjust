@@ -1,4 +1,5 @@
 const isArray = require('@antv/util/src/type/isArray');
+const isNil = require('@antv/util/src/type/isNil');
 const Adjust = require('./base');
 
 class Stack extends Adjust {
@@ -30,15 +31,17 @@ class Stack extends Adjust {
       for (let j = 0, len = data.length; j < len; j++) {
         const item = data[j];
         const x = item[xField] || 0;
-        let y = item[yField] || 0;
+        let y = item[yField];
         const xkey = x.toString();
         y = isArray(y) ? y[1] : y;
-        const direction = y >= 0 ? 'positive' : 'negative';
-        if (!stackCache[direction][xkey]) {
-          stackCache[direction][xkey] = 0;
+        if (!isNil(y)) {
+          const direction = y >= 0 ? 'positive' : 'negative';
+          if (!stackCache[direction][xkey]) {
+            stackCache[direction][xkey] = 0;
+          }
+          item[yField] = [ stackCache[direction][xkey], y + stackCache[direction][xkey] ];
+          stackCache[direction][xkey] += y;
         }
-        item[yField] = [ stackCache[direction][xkey], y + stackCache[direction][xkey] ];
-        stackCache[direction][xkey] += y;
       }
     }
   }
