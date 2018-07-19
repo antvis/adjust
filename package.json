@@ -1,6 +1,6 @@
 {
   "name": "@antv/adjust",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Data Adjust module for G2, F2.",
   "browser": "build/adjust.js",
   "main": "build/adjust.js",
