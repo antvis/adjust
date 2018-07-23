@@ -1,5 +1,5 @@
 const Adjust = require('./base');
-const each = require('@antv/util/src/each');
+const each = require('@antv/util/lib/each');
 
 const MARGIN_RATIO = 1 / 2;
 const DODGE_RATIO = 1 / 2;

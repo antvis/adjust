@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const Adjust = require('../../src/index');
-const cloneDeep = require('@antv/util/src/clone');
-const group = require('@antv/util/src/group');
+const cloneDeep = require('@antv/util/lib/clone');
+const group = require('@antv/util/lib/group');
 
 describe('stack adjust', function() {
   describe('default stack', function() {

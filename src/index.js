@@ -1,5 +1,5 @@
 // 完整版下使用支持按照某个字段进行分组的 dodge
-const mix = require('@antv/util/src/mix');
+const mix = require('@antv/util/lib/mix');
 const Adjust = require('./base');
 const Dodge = require('./dodge');
 const Stack = require('./stack');

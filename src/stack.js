@@ -1,5 +1,5 @@
-const isArray = require('@antv/util/src/type/isArray');
-const isNil = require('@antv/util/src/type/isNil');
+const isArray = require('@antv/util/lib/type/isArray');
+const isNil = require('@antv/util/lib/type/isNil');
 const Adjust = require('./base');
 
 class Stack extends Adjust {

@@ -1,4 +1,4 @@
-const mix = require('@antv/util/src/mix');
+const mix = require('@antv/util/lib/mix');
 
 class Adjust {
 

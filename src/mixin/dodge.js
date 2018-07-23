@@ -1,10 +1,10 @@
 const ArrayUtil = {
-  merge: require('@antv/util/src/array/merge'),
-  values: require('@antv/util/src/array/values')
+  merge: require('@antv/util/lib/array/merge'),
+  values: require('@antv/util/lib/array/values')
 };
 
-const group = require('@antv/util/src/group');
-const each = require('@antv/util/src/each');
+const group = require('@antv/util/lib/group');
+const each = require('@antv/util/lib/each');
 
 module.exports = {
   /**

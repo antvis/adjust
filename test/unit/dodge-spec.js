@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const Adjust = require('../../src/index');
-const group = require('@antv/util/src/group');
-const cloneDeep = require('@antv/util/src/clone');
+const group = require('@antv/util/lib/group');
+const cloneDeep = require('@antv/util/lib/clone');
 
 function snapEqual(v1, v2) {
   return Math.abs(v1 - v2) < 0.001;

@@ -1,7 +1,7 @@
 const DEFAULT_Y = 0; // 默认的y的值
-const each = require('@antv/util/src/each');
+const each = require('@antv/util/lib/each');
 const ArrayUtil = {
-  values: require('@antv/util/src/array/values')
+  values: require('@antv/util/lib/array/values')
 };
 module.exports = {
   /**
