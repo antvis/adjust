@@ -1,6 +1,6 @@
 const ArrayUtil = {
   merge: require('@antv/util/lib/array/merge'),
-  values: require('@antv/util/lib/array/values')
+  values: require('@antv/util/lib/array/values-of-key')
 };
 
 const group = require('@antv/util/lib/group');

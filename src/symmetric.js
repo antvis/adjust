@@ -1,9 +1,8 @@
 const each = require('@antv/util/lib/each');
-const maxBy = require('@antv/util/lib/math/maxBy');
-const isArray = require('@antv/util/lib/type/isArray');
+const maxBy = require('@antv/util/lib/math/max-by');
+const isArray = require('@antv/util/lib/type/is-array');
 const ArrayUtil = {
-  merge: require('@antv/util/lib/array/merge'),
-  values: require('@antv/util/lib/array/values')
+  merge: require('@antv/util/lib/array/merge')
 };
 const Adjust = require('./base');
 
