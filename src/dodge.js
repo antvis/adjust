@@ -42,8 +42,8 @@ class Dodge extends Adjust {
         const obj = data[i];
         const value = obj[xField];
         const range = {
-          pre: value - 0.5,
-          next: value + 0.5
+          pre: len === 1 ? value - 1 : value - 0.5,
+          next: len === 1 ? value + 1 : value + 0.5
         };
         const dodgeValue = self.getDodgeOffset(range, index, count);
         obj[xField] = dodgeValue;
