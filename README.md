@@ -1,4 +1,4 @@
-# adjust
+# @antv/adjust
 
 [![](https://img.shields.io/travis/antvis/adjust.svg)](https://travis-ci.org/antvis/adjust)
 ![](https://img.shields.io/badge/language-javascript-red.svg)
