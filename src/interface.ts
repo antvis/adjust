@@ -1,7 +1,3 @@
-export interface AdjustBaseCfg {
-  readonly adjustNames: string[];
-}
-
 export interface AdjustCfg {
   readonly adjustNames: string[];
   readonly xField?: string;
@@ -16,7 +12,8 @@ export interface AdjustCfg {
   readonly reverseOrder?: boolean;
 }
 
-export interface DodgeCfg extends AdjustBaseCfg {
+export interface DodgeCfg {
+  readonly adjustNames: string[];
   readonly xField: string;
   readonly yField: string;
   readonly marginRatio: number;
@@ -24,15 +21,8 @@ export interface DodgeCfg extends AdjustBaseCfg {
   readonly dodgeBy?: string;
 }
 
-export interface JitterCfg extends AdjustBaseCfg {
-  readonly xField: string;
-  readonly yField: string;
-
-  // readonly marginRatio: number;
-  // readonly dodgeRatio: number;
-}
-
-export interface StackCfg extends AdjustBaseCfg {
+export interface StackCfg {
+  readonly adjustNames: string[];
   readonly xField: string;
   readonly yField: string;
 
@@ -41,17 +31,11 @@ export interface StackCfg extends AdjustBaseCfg {
   readonly reverseOrder: boolean;
 }
 
-export interface SymmetricCfg extends AdjustBaseCfg {
-  readonly xField: string;
-  readonly yField: string;
-}
-
-// 一个数据点的数据结构，只能说是一个 object，什么都定义不了
-export interface DataPointType {
+export interface Data {
   [key: string]: any;
 }
 
-export interface RangeType {
+export interface Range {
   pre: number;
   next: number;
 }

@@ -1,5 +1,5 @@
 import * as _ from '@antv/util';
-import { DataPointType, StackCfg } from '../interface';
+import { Data, StackCfg } from '../interface';
 import Adjust from './adjust';
 
 const Cache = _.Cache;
@@ -23,7 +23,7 @@ export default class Stack extends Adjust {
    * 方法入参是经过数据分组、数据数字化之后的二维数组
    * @param groupDataArray 分组之后的数据
    */
-  public process(groupDataArray: DataPointType[][]): DataPointType[][] {
+  public process(groupDataArray: Data[][]): Data[][] {
     const { yField, reverseOrder } = this;
 
     // 如果有指定 y 字段，那么按照 y 字段来 stack
@@ -33,11 +33,11 @@ export default class Stack extends Adjust {
     return reverseOrder ? this.reverse(d) : d;
   }
 
-  private reverse(groupedDataArray: DataPointType[][]): DataPointType[][] {
+  private reverse(groupedDataArray: Data[][]): Data[][] {
     return groupedDataArray.slice(0).reverse();
   }
 
-  private processStack(groupDataArray: DataPointType[][]): DataPointType[][] {
+  private processStack(groupDataArray: Data[][]): Data[][] {
     const { xField, yField, reverseOrder } = this;
 
     // 层叠顺序翻转
@@ -82,7 +82,7 @@ export default class Stack extends Adjust {
     });
   }
 
-  private processOneDimStack(groupDataArray: DataPointType[][]): DataPointType[][] {
+  private processOneDimStack(groupDataArray: Data[][]): Data[][] {
     const { xField, height, reverseOrder } = this;
     const yField = 'y';
 
@@ -92,9 +92,9 @@ export default class Stack extends Adjust {
     // 缓存累加数据
     const cache = new Cache<number>();
 
-    return groupedDataArray.map((dataArray): DataPointType[] => {
+    return groupedDataArray.map((dataArray): Data[] => {
       return dataArray.map(
-        (data): DataPointType => {
+        (data): Data => {
           const { size } = this;
           const xValue: string = data[xField];
 

@@ -1,6 +1,6 @@
 import * as _ from '@antv/util';
 import { DODGE_RATIO, MARGIN_RATIO } from '../constant';
-import { DataPointType, DodgeCfg, RangeType } from '../interface';
+import { Data, DodgeCfg, Range } from '../interface';
 import Adjust from './adjust';
 
 export default class Dodge extends Adjust {
@@ -12,8 +12,8 @@ export default class Dodge extends Adjust {
   public readonly dodgeBy: string;
 
   private cacheMap: { [key: string]: any } = {};
-  private adjustDataArray: DataPointType[][] = [];
-  private mergeData: DataPointType[] = [];
+  private adjustDataArray: Data[][] = [];
+  private mergeData: Data[] = [];
 
   constructor(cfg: DodgeCfg) {
     super(cfg);
@@ -23,7 +23,7 @@ export default class Dodge extends Adjust {
     this.dodgeRatio = dodgeRatio;
   }
 
-  public process(groupDataArray: DataPointType[][]): DataPointType[][] {
+  public process(groupDataArray: Data[][]): Data[][] {
     const groupedDataArray = _.clone(groupDataArray);
     // 将数据数组展开一层
     const mergeData = _.flatten(groupedDataArray);
@@ -45,12 +45,12 @@ export default class Dodge extends Adjust {
     return groupedDataArray;
   }
 
-  protected adjustDim(dim: string, values: number[], data: DataPointType[], frameIndex: number): any[] {
+  protected adjustDim(dim: string, values: number[], data: Data[], frameIndex: number): any[] {
     const map = this.getDistribution(dim);
     const groupData = this.groupData(data, dim); // 根据值分组
 
     _.each(groupData, (group, key) => {
-      let range: RangeType;
+      let range: Range;
 
       // xField 中只有一个值，不需要做 dodge
       if (values.length === 1) {
@@ -72,7 +72,7 @@ export default class Dodge extends Adjust {
     return [];
   }
 
-  private getDodgeOffset(range: RangeType, idx: number, len: number): number {
+  private getDodgeOffset(range: Range, idx: number, len: number): number {
     const { dodgeRatio, marginRatio } = this;
     const { pre, next } = range;
 
