@@ -1,9 +1,7 @@
 import * as _ from '@antv/util';
-import { DataPointType, JitterCfg, RangeType } from '../interface';
+import { GAP } from '../constant';
+import { DataPointType, RangeType } from '../interface';
 import Adjust from './adjust';
-
-// 散点分开之后，距离边界的距离
-const GAP = 0.05;
 
 function randomNumber(min: number, max: number): number {
   return (max - min) * Math.random() + min;
