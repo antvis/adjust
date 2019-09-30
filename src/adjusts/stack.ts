@@ -5,25 +5,18 @@ import Adjust from './adjust';
 const Cache = _.Cache;
 
 export default class Stack extends Adjust {
-  public cfg: StackCfg = {
-    adjustNames: ['y'], // 指 x, y,
-    xField: '', // 调整对应的 x 方向对应的字段名称
-    yField: '', // 调整对应的 y 方向对应的字段名称
-    height: NaN,
-    size: 10,
-    reverseOrder: false,
-  };
+  public readonly height: number;
+  public readonly size: number;
+  public readonly reverseOrder: boolean;
 
   constructor(cfg: StackCfg) {
     super(cfg);
-    this.cfg = {
-      ...this.cfg,
-      ...cfg,
-    };
-  }
 
-  public _reverse(groupedDataArray: DataPointType[][]): DataPointType[][] {
-    return groupedDataArray.slice(0).reverse();
+    const { adjustNames = ['y'], height = NaN, size = 10, reverseOrder = false } = cfg;
+    this.adjustNames = adjustNames;
+    this.height = height;
+    this.size = size;
+    this.reverseOrder = reverseOrder;
   }
 
   /**
@@ -31,20 +24,27 @@ export default class Stack extends Adjust {
    * @param groupDataArray 分组之后的数据
    */
   public process(groupDataArray: DataPointType[][]): DataPointType[][] {
-    const { yField, reverseOrder } = this.cfg;
+    const { yField, reverseOrder } = this;
 
     // 如果有指定 y 字段，那么按照 y 字段来 stack
     // 否则，按照高度均分
     const d = yField ? this.processStack(groupDataArray) : this.processOneDimStack(groupDataArray);
 
-    return reverseOrder ? this._reverse(d) : d;
+    return reverseOrder ? this.reverse(d) : d;
   }
 
-  public processStack(groupDataArray: DataPointType[][]): DataPointType[][] {
-    const { xField, yField, reverseOrder } = this.cfg;
+  // 没有用到，空实现
+  public adjustDim(dim: string, values: number[], data: object[]) {}
+
+  private reverse(groupedDataArray: DataPointType[][]): DataPointType[][] {
+    return groupedDataArray.slice(0).reverse();
+  }
+
+  private processStack(groupDataArray: DataPointType[][]): DataPointType[][] {
+    const { xField, yField, reverseOrder } = this;
 
     // 层叠顺序翻转
-    const groupedDataArray = reverseOrder ? this._reverse(groupDataArray) : groupDataArray;
+    const groupedDataArray = reverseOrder ? this.reverse(groupDataArray) : groupDataArray;
 
     // 用来缓存，正数和负数的堆叠问题
     const positive = new Cache<number>();
@@ -85,15 +85,12 @@ export default class Stack extends Adjust {
     });
   }
 
-  // todo 不明白画出来是什么含义
-  public processOneDimStack(groupDataArray: DataPointType[][]): DataPointType[][] {
-    const { xField, height, reverseOrder } = this.cfg;
-    let { yField } = this.cfg;
-    // todo processOneDimStack 必然是 yField 不存在
-    yField = 'y';
+  private processOneDimStack(groupDataArray: DataPointType[][]): DataPointType[][] {
+    const { xField, height, reverseOrder } = this;
+    const yField = 'y';
 
     // 如果层叠的顺序翻转
-    const groupedDataArray = reverseOrder ? this._reverse(groupDataArray) : groupDataArray;
+    const groupedDataArray = reverseOrder ? this.reverse(groupDataArray) : groupDataArray;
 
     // 缓存累加数据
     const cache = new Cache<number>();
@@ -101,7 +98,7 @@ export default class Stack extends Adjust {
     return groupedDataArray.map((dataArray): DataPointType[] => {
       return dataArray.map(
         (data): DataPointType => {
-          const { size } = this.cfg;
+          const { size } = this;
           const xValue: string = data[xField];
 
           // todo 没有看到这个 stack 计算原理
@@ -123,7 +120,4 @@ export default class Stack extends Adjust {
       );
     });
   }
-
-  // 没有用到，空实现
-  public adjustDim(dim: string, values: number[], data: object[]) {}
 }

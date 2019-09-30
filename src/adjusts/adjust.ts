@@ -10,15 +10,19 @@ export interface DimValuesMapType {
 const DEFAULT_Y = 0; // 默认的 y 的值
 
 export default abstract class Adjust {
-  public cfg: AdjustCfg = {
-    adjustNames: ['x', 'y'],
-  };
+  /** 参与调整的维度 */
+  public adjustNames: string[];
+  /** x 维度对应的字段 */
+  public readonly xField: string;
+  /** y 维度对应的字段 */
+  public readonly yField: string;
 
   constructor(cfg: AdjustCfg) {
-    this.cfg = {
-      ...this.cfg,
-      ...cfg,
-    };
+    const { xField, yField, adjustNames = ['x', 'y'] } = cfg;
+
+    this.adjustNames = adjustNames;
+    this.xField = xField;
+    this.yField = yField;
   }
 
   /**
@@ -26,11 +30,11 @@ export default abstract class Adjust {
    * @param dim
    */
   public isAdjust(dim: string): boolean {
-    return this.cfg.adjustNames.indexOf(dim) >= 0;
+    return this.adjustNames.indexOf(dim) >= 0;
   }
 
   public getAdjustRange(dim: string, dimValue: number, values: number[]): RangeType {
-    const { yField } = this.cfg;
+    const { yField } = this;
 
     const index = values.indexOf(dimValue);
     const length = values.length;
@@ -72,7 +76,7 @@ export default abstract class Adjust {
 
   public adjustData(groupedDataArray: DataPointType[][], mergedData: DataPointType[]) {
     // 所有调整维度的值数组
-    const dimValuesMap = this._getDimValues(mergedData);
+    const dimValuesMap = this.getDimValues(mergedData);
 
     // 按照每一个分组来进行调整
     _.each(groupedDataArray, (dataArray, index) => {
@@ -105,15 +109,16 @@ export default abstract class Adjust {
 
   // 需要各自实现的方法
   public abstract process(dataArray: DataPointType[][]): DataPointType[][];
+  // TODO: 不做成抽象方法
   public abstract adjustDim(dim: string, values: number[], data: DataPointType[], length?: number, index?: number): any;
+
   /**
-   * @protected
    * 获取可调整度量对应的值
    * @param mergedData 数据
    * @return 值的映射
    */
-  protected _getDimValues(mergedData: DataPointType[]): DimValuesMapType {
-    const { xField, yField } = this.cfg;
+  private getDimValues(mergedData: DataPointType[]): DimValuesMapType {
+    const { xField, yField } = this;
 
     const dimValuesMap: DimValuesMapType = {};
 

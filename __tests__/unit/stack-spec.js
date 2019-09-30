@@ -24,11 +24,11 @@ describe('stack adjust', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.b.length).to.be.equal(5);
     });
     it('process adjust', function() {
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
       const obj1 = newData[0][0];
 
       expect(obj1.b.length).to.be.equal(2);
@@ -41,7 +41,7 @@ describe('stack adjust', function() {
     });
 
     it('adjust reverse', function() {
-      adjust.cfg.reverseOrder = true;
+      adjust.reverseOrder = true;
       const dataArray = group(data, 'c');
 
       const newDataArray = adjust.process(dataArray);
@@ -53,40 +53,43 @@ describe('stack adjust', function() {
       expect(obj1.b.length).to.be.equal(2);
       expect(obj1.b[0]).to.be.equal(3);
       expect(obj1.b[1]).to.be.equal(5);
-
     });
   });
 
   describe('stack array', function() {
-    const data = [ {
-      a: 1,
-      b: [ 0, 3 ],
-      c: 1,
-    }, {
-      a: 1,
-      b: [ 3, 4 ],
-      c: 2,
-    },
+    const data = [
+      {
+        a: 1,
+        b: [0, 3],
+        c: 1,
+      },
+      {
+        a: 1,
+        b: [3, 4],
+        c: 2,
+      },
 
-    {
-      a: 2,
-      b: 1,
-      c: 1,
-    }, {
-      a: 2,
-      b: 4,
-      c: 2,
-    },
+      {
+        a: 2,
+        b: 1,
+        c: 1,
+      },
+      {
+        a: 2,
+        b: 4,
+        c: 2,
+      },
 
-    {
-      a: 3,
-      b: 5,
-      c: 1,
-    }, {
-      a: 3,
-      b: 1,
-      c: 2,
-    },
+      {
+        a: 3,
+        b: 5,
+        c: 1,
+      },
+      {
+        a: 3,
+        b: 1,
+        c: 2,
+      },
     ];
 
     const adjust = new Stack({
@@ -100,11 +103,11 @@ describe('stack adjust', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.b.length).to.be.equal(5);
     });
     it('process adjust', function() {
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
 
       const obj1 = newData[0][0];
       expect(obj1.b.length).to.be.equal(2);
@@ -131,7 +134,7 @@ describe('stack adjust', function() {
         xField: 'a',
         yField: 'b',
       });
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
       const obj1 = newData[0][0];
       expect(obj1.b).to.be.undefined;
 
@@ -146,36 +149,39 @@ describe('stack adjust', function() {
   });
 
   describe('stack with 0', function() {
-    const data = [ {
-      a: 1,
-      b: 2,
-      c: 1,
-    }, {
-      a: 1,
-      b: 0,
-      c: 2,
-    },
-    {
-      a: 2,
-      b: 1,
-      c: 1,
-    }, {
-      a: 2,
-      b: 4,
-      c: 2,
-    },
+    const data = [
+      {
+        a: 1,
+        b: 2,
+        c: 1,
+      },
+      {
+        a: 1,
+        b: 0,
+        c: 2,
+      },
+      {
+        a: 2,
+        b: 1,
+        c: 1,
+      },
+      {
+        a: 2,
+        b: 4,
+        c: 2,
+      },
 
-    {
-      a: 3,
-      b: 0,
-      c: 1,
-    }, {
-      a: 3,
-      b: 1,
-      c: 2,
-    },
+      {
+        a: 3,
+        b: 0,
+        c: 1,
+      },
+      {
+        a: 3,
+        b: 1,
+        c: 2,
+      },
     ];
-
 
     it('adjust result', function() {
       const adjust = new Stack({
@@ -183,7 +189,7 @@ describe('stack adjust', function() {
         yField: 'b',
       });
 
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
 
       const obj1 = newData[0][0];
       expect(obj1.b.length).to.be.equal(2);
@@ -197,35 +203,39 @@ describe('stack adjust', function() {
     });
   });
   describe('stack one dimension', function() {
-    const data = [ {
-      a: 1,
-      b: 2,
-      c: 1,
-    }, {
-      a: 1,
-      b: 3,
-      c: 2,
-    },
+    const data = [
+      {
+        a: 1,
+        b: 2,
+        c: 1,
+      },
+      {
+        a: 1,
+        b: 3,
+        c: 2,
+      },
 
-    {
-      a: 2,
-      b: 1,
-      c: 1,
-    }, {
-      a: 2,
-      b: 4,
-      c: 2,
-    },
+      {
+        a: 2,
+        b: 1,
+        c: 1,
+      },
+      {
+        a: 2,
+        b: 4,
+        c: 2,
+      },
 
-    {
-      a: 3,
-      b: 5,
-      c: 1,
-    }, {
-      a: 3,
-      b: 1,
-      c: 2,
-    },
+      {
+        a: 3,
+        b: 5,
+        c: 1,
+      },
+      {
+        a: 3,
+        b: 1,
+        c: 2,
+      },
     ];
 
     const adjust = new Stack({
@@ -239,52 +249,55 @@ describe('stack adjust', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.a).to.be.equal(undefined);
       expect(map.y.length).to.be.equal(2);
     });
 
     it('process adjust', function() {
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
       const obj1 = newData[0][0];
       expect(obj1.y).to.be.equal(0.1);
 
       const obj2 = newData[0][1];
       expect(Math.abs(obj2.y - 0.3) < 0.0001).to.be.equal(true);
     });
-
   });
 
   describe('stack one dimension with reverse', function() {
-    const data = [ {
-      a: 1,
-      b: 2,
-      c: 1,
-    }, {
-      a: 1,
-      b: 3,
-      c: 2,
-    },
+    const data = [
+      {
+        a: 1,
+        b: 2,
+        c: 1,
+      },
+      {
+        a: 1,
+        b: 3,
+        c: 2,
+      },
 
-    {
-      a: 2,
-      b: 1,
-      c: 1,
-    }, {
-      a: 2,
-      b: 4,
-      c: 2,
-    },
+      {
+        a: 2,
+        b: 1,
+        c: 1,
+      },
+      {
+        a: 2,
+        b: 4,
+        c: 2,
+      },
 
-    {
-      a: 3,
-      b: 5,
-      c: 1,
-    }, {
-      a: 3,
-      b: 1,
-      c: 2,
-    },
+      {
+        a: 3,
+        b: 5,
+        c: 1,
+      },
+      {
+        a: 3,
+        b: 1,
+        c: 2,
+      },
     ];
 
     const adjust = new Stack({
@@ -294,7 +307,7 @@ describe('stack adjust', function() {
     });
 
     it('process adjust', function() {
-      const newData = adjust.process([ data ]);
+      const newData = adjust.process([data]);
       const obj1 = newData[0][0];
       expect(obj1.c).to.be.equal(1);
       expect(obj1.y).to.be.equal(0.1);

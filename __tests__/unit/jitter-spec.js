@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import Jitter from '../../src/adjusts/jitter';
 
 describe('adjust jitter', function() {
-
   describe('default adjust', function() {
     const data = [
       { a: 1, b: 2, c: 1 },
@@ -21,26 +20,24 @@ describe('adjust jitter', function() {
       // adjustNames: [ 'x', 'y' ]
     });
 
-
     it('is adjust', function() {
       expect(adjust.isAdjust('x')).to.be.equal(true);
       expect(adjust.isAdjust('y')).to.be.equal(true);
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.a.length).to.be.equal(3);
       expect(map.c.length).to.be.equal(2);
     });
     it('process adjust', function() {
-      [ newData ] = adjust.process([ data ]);
+      [newData] = adjust.process([data]);
     });
 
     it('adjust result', function() {
       const obj1 = newData[0];
       expect(obj1.a > 0.5).to.be.equal(true);
       expect(obj1.a < 1.5).to.be.equal(true);
-
     });
 
     it('adjust second', function() {
@@ -51,10 +48,7 @@ describe('adjust jitter', function() {
   });
 
   describe('adjust one dim.', function() {
-    const data = [
-      { a: 0, b: 2, c: 1 },
-      { a: 0, b: 3, c: 2 },
-    ];
+    const data = [{ a: 0, b: 2, c: 1 }, { a: 0, b: 3, c: 2 }];
 
     let newData;
 
@@ -69,13 +63,13 @@ describe('adjust jitter', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.a.length).to.be.equal(1);
       expect(map.y.length).to.be.equal(0);
     });
 
     it('process adjust', function() {
-      [ newData ] = adjust.process([ data ]);
+      [newData] = adjust.process([data]);
     });
 
     it('adjust result', function() {
