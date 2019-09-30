@@ -25,15 +25,18 @@ export default abstract class Adjust {
     this.yField = yField;
   }
 
+  // 需要各自实现的方法
+  public abstract process(dataArray: DataPointType[][]): DataPointType[][];
+
   /**
    * 查看维度是否是 adjust 字段
    * @param dim
    */
-  public isAdjust(dim: string): boolean {
+  protected isAdjust(dim: string): boolean {
     return this.adjustNames.indexOf(dim) >= 0;
   }
 
-  public getAdjustRange(dim: string, dimValue: number, values: number[]): RangeType {
+  protected getAdjustRange(dim: string, dimValue: number, values: number[]): RangeType {
     const { yField } = this;
 
     const index = values.indexOf(dimValue);
@@ -74,7 +77,7 @@ export default abstract class Adjust {
     };
   }
 
-  public adjustData(groupedDataArray: DataPointType[][], mergedData: DataPointType[]) {
+  protected adjustData(groupedDataArray: DataPointType[][], mergedData: DataPointType[]) {
     // 所有调整维度的值数组
     const dimValuesMap = this.getDimValues(mergedData);
 
@@ -84,7 +87,7 @@ export default abstract class Adjust {
       // 每个分组中，分别按照不同的 dim 进行调整
       _.each(dimValuesMap, (values: number[], dim: string) => {
         // 根据不同的度量分别调整位置
-        this.adjustDim(dim, values, dataArray, groupedDataArray.length, index);
+        this.adjustDim(dim, values, dataArray, index);
       });
     });
   }
@@ -95,7 +98,7 @@ export default abstract class Adjust {
    * @param dim 分组的字段
    * @return 分组结果
    */
-  public groupData(data: DataPointType[], dim: string): { [dim: string]: DataPointType[] } {
+  protected groupData(data: DataPointType[], dim: string): { [dim: string]: DataPointType[] } {
     // 补齐数据空数据为默认值
     _.each(data, (record: DataPointType) => {
       if (record[dim] === undefined) {
@@ -107,10 +110,8 @@ export default abstract class Adjust {
     return _.groupBy(data, dim);
   }
 
-  // 需要各自实现的方法
-  public abstract process(dataArray: DataPointType[][]): DataPointType[][];
-  // TODO: 不做成抽象方法
-  public abstract adjustDim(dim: string, values: number[], data: DataPointType[], length?: number, index?: number): any;
+  /** @override */
+  protected adjustDim(dim: string, values: number[], data: DataPointType[], index?: number): void {}
 
   /**
    * 获取可调整度量对应的值
@@ -133,7 +134,6 @@ export default abstract class Adjust {
 
     dims.forEach((dim: string): void => {
       // 在每个维度上，所有的值
-      // @ts-ignore
       dimValuesMap[dim] = _.valuesOfKey(mergedData, dim).sort((v1, v2) => v1 - v2) as number[];
     });
 

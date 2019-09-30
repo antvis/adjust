@@ -28,7 +28,7 @@ export default class Jitter extends Adjust {
    * @param values
    * @param dataArray
    */
-  public adjustDim(dim: string, values: number[], dataArray: DataPointType[]) {
+  protected adjustDim(dim: string, values: number[], dataArray: DataPointType[]) {
     // 在每一个分组中，将数据再按照 dim 分组，用于散列
     const groupDataArray = this.groupData(dataArray, dim);
     return _.each(groupDataArray, (data: DataPointType[], dimValue: string) => {

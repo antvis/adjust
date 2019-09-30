@@ -12,7 +12,6 @@ export default class Symmetric extends Adjust {
     const cache = this.getXValuesMaxMap(mergeData);
 
     // 所有数据的最大的值
-    // const max = this.getDimMaxValue(mergeData, yField);
     const max = Math.max(...Object.keys(cache).map((key) => cache[key]));
 
     return _.map(groupDataArray, (dataArray) => {
@@ -39,9 +38,6 @@ export default class Symmetric extends Adjust {
       });
     });
   }
-
-  // 没有用到，空实现
-  public adjustDim(dim: string, values: number[], data: object[]) {}
 
   // 获取每个 x 对应的最大的值
   private getXValuesMaxMap(mergeData: DataPointType[]): { [key: string]: number } {
