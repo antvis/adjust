@@ -1,4 +1,5 @@
 import * as _ from '@antv/util';
+import { DEFAULT_Y } from '../constant';
 import { AdjustCfg, DataPointType, RangeType } from '../interface';
 
 export type AdjustConstructor = new (cfg: any) => Adjust;
@@ -6,8 +7,6 @@ export type AdjustConstructor = new (cfg: any) => Adjust;
 export interface DimValuesMapType {
   [dim: string]: number[];
 }
-
-const DEFAULT_Y = 0; // 默认的 y 的值
 
 export default abstract class Adjust {
   /** 参与调整的维度 */

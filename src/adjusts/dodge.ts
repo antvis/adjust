@@ -1,11 +1,7 @@
 import * as _ from '@antv/util';
-
+import { DODGE_RATIO, MARGIN_RATIO } from '../constant';
 import { DataPointType, DodgeCfg, RangeType } from '../interface';
 import Adjust from './adjust';
-
-// 偏移之后，间距
-const MARGIN_RATIO = 1 / 2;
-const DODGE_RATIO = 1 / 2;
 
 export default class Dodge extends Adjust {
   /** 调整占单位宽度的比例，例如：占 2 个分类间距的 1 / 2 */
