@@ -33,9 +33,6 @@ export default class Stack extends Adjust {
     return reverseOrder ? this.reverse(d) : d;
   }
 
-  // 没有用到，空实现
-  public adjustDim(dim: string, values: number[], data: object[]) {}
-
   private reverse(groupedDataArray: DataPointType[][]): DataPointType[][] {
     return groupedDataArray.slice(0).reverse();
   }

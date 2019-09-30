@@ -49,13 +49,7 @@ export default class Dodge extends Adjust {
     return groupedDataArray;
   }
 
-  public adjustDim(
-    dim: string,
-    values: number[],
-    data: DataPointType[],
-    frameCount: number,
-    frameIndex: number
-  ): any[] {
+  protected adjustDim(dim: string, values: number[], data: DataPointType[], frameIndex: number): any[] {
     const map = this.getDistribution(dim);
     const groupData = this.groupData(data, dim); // 根据值分组
 
