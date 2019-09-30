@@ -8,7 +8,6 @@ function snapEqual(v1, v2) {
 }
 
 describe('adjust dodge', function() {
-
   describe('default adjust all has two', function() {
     const data = [
       { a: 1, b: 2, c: 1 },
@@ -22,7 +21,7 @@ describe('adjust dodge', function() {
     const groupData = group(data, 'c');
     const adjust = new Dodge({
       xField: 'a',
-      adjustNames: [ 'x' ],
+      adjustNames: ['x'],
     });
 
     let newGroupData;
@@ -33,7 +32,7 @@ describe('adjust dodge', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.a.length).to.be.equal(3);
     });
     let d1;
@@ -68,7 +67,7 @@ describe('adjust dodge', function() {
     let newGroupData;
     const adjust = new Dodge({
       xField: 'a',
-      adjustNames: [ 'x' ],
+      adjustNames: ['x'],
     });
 
     it('is adjust', function() {
@@ -77,7 +76,7 @@ describe('adjust dodge', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.a.length).to.be.equal(3);
     });
     let d1;
@@ -93,21 +92,15 @@ describe('adjust dodge', function() {
       const obj2 = d1[1];
       expect(obj2.a).to.be.equal(1.8125);
     });
-
   });
 
   describe('adjust only one dim', function() {
-
-    const data = [
-      { a: 1, b: 3, c: 2 },
-      { a: 2, b: 1, c: 1 },
-      { a: 3, b: 5, c: 1 },
-    ];
+    const data = [{ a: 1, b: 3, c: 2 }, { a: 2, b: 1, c: 1 }, { a: 3, b: 5, c: 1 }];
     let newDataArray;
 
     const adjust = new Dodge({
       xField: 'a',
-      adjustNames: [ 'y' ],
+      adjustNames: ['y'],
     });
     const groupData = group(data, 'a');
 
@@ -117,7 +110,7 @@ describe('adjust dodge', function() {
     });
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map.y.length).to.be.equal(2);
     });
 
@@ -127,34 +120,28 @@ describe('adjust dodge', function() {
       expect(newDataArray.length).to.be.equal(3);
       expect(snapEqual(newDataArray[0][0].y, 0.25)).equal(true);
       expect(snapEqual(newDataArray[1][0].y, 0.5)).equal(true);
-
     });
 
     it('get distribute', function() {
       adjust.adjDataArray = groupData;
       const map = adjust.getDistribution('y');
       expect(map[0].length).to.be.equal(3);
-
     });
   });
 
   describe('adjust only one group.', function() {
-    const data = [
-      { a: 0, b: 3, c: 2 },
-      { a: 0, b: 1, c: 1 },
-      { a: 0, b: 5, c: 1 },
-    ];
+    const data = [{ a: 0, b: 3, c: 2 }, { a: 0, b: 1, c: 1 }, { a: 0, b: 5, c: 1 }];
     let newGroupData;
     const adjust = new Dodge({
       xField: 'a',
-      adjustNames: [ 'x' ],
+      adjustNames: ['x'],
     });
     const groupData = group(data, 'b');
 
     it('get dim values', function() {
-      const map = adjust._getDimValues(data);
+      const map = adjust.getDimValues(data);
       expect(map).have.property('a');
-      expect(map.a).eqls([ 0 ]);
+      expect(map.a).eqls([0]);
     });
 
     it('adjust', function() {
@@ -182,7 +169,7 @@ describe('adjust dodge', function() {
     const adjust = new Dodge({
       xField: 'a',
       dodgeBy: 'b',
-      adjustNames: [ 'x' ],
+      adjustNames: ['x'],
     });
 
     const groupData = group(data, 'a');
