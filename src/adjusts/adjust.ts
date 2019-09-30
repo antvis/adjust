@@ -1,6 +1,6 @@
 import * as _ from '@antv/util';
 import { DEFAULT_Y } from '../constant';
-import { AdjustCfg, DataPointType, RangeType } from '../interface';
+import { AdjustCfg, Data, Range } from '../interface';
 
 export type AdjustConstructor = new (cfg: any) => Adjust;
 
@@ -25,7 +25,7 @@ export default abstract class Adjust {
   }
 
   // 需要各自实现的方法
-  public abstract process(dataArray: DataPointType[][]): DataPointType[][];
+  public abstract process(dataArray: Data[][]): Data[][];
 
   /**
    * 查看维度是否是 adjust 字段
@@ -35,7 +35,7 @@ export default abstract class Adjust {
     return this.adjustNames.indexOf(dim) >= 0;
   }
 
-  protected getAdjustRange(dim: string, dimValue: number, values: number[]): RangeType {
+  protected getAdjustRange(dim: string, dimValue: number, values: number[]): Range {
     const { yField } = this;
 
     const index = values.indexOf(dimValue);
@@ -76,7 +76,7 @@ export default abstract class Adjust {
     };
   }
 
-  protected adjustData(groupedDataArray: DataPointType[][], mergedData: DataPointType[]) {
+  protected adjustData(groupedDataArray: Data[][], mergedData: Data[]) {
     // 所有调整维度的值数组
     const dimValuesMap = this.getDimValues(mergedData);
 
@@ -97,9 +97,9 @@ export default abstract class Adjust {
    * @param dim 分组的字段
    * @return 分组结果
    */
-  protected groupData(data: DataPointType[], dim: string): { [dim: string]: DataPointType[] } {
+  protected groupData(data: Data[], dim: string): { [dim: string]: Data[] } {
     // 补齐数据空数据为默认值
-    _.each(data, (record: DataPointType) => {
+    _.each(data, (record: Data) => {
       if (record[dim] === undefined) {
         record[dim] = DEFAULT_Y;
       }
@@ -110,14 +110,14 @@ export default abstract class Adjust {
   }
 
   /** @override */
-  protected adjustDim(dim: string, values: number[], data: DataPointType[], index?: number): void {}
+  protected adjustDim(dim: string, values: number[], data: Data[], index?: number): void {}
 
   /**
    * 获取可调整度量对应的值
    * @param mergedData 数据
    * @return 值的映射
    */
-  private getDimValues(mergedData: DataPointType[]): DimValuesMapType {
+  private getDimValues(mergedData: Data[]): DimValuesMapType {
     const { xField, yField } = this;
 
     const dimValuesMap: DimValuesMapType = {};

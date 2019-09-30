@@ -1,9 +1,9 @@
 import * as _ from '@antv/util';
-import { DataPointType } from '../interface';
+import { Data } from '../interface';
 import Adjust from './adjust';
 
 export default class Symmetric extends Adjust {
-  public process(groupDataArray: DataPointType[][]): DataPointType[][] {
+  public process(groupDataArray: Data[][]): Data[][] {
     const mergeData = _.flatten(groupDataArray);
 
     const { xField, yField } = this;
@@ -40,7 +40,7 @@ export default class Symmetric extends Adjust {
   }
 
   // 获取每个 x 对应的最大的值
-  private getXValuesMaxMap(mergeData: DataPointType[]): { [key: string]: number } {
+  private getXValuesMaxMap(mergeData: Data[]): { [key: string]: number } {
     const { xField, yField } = this;
 
     // 根据 xField 的值进行分组
@@ -50,7 +50,7 @@ export default class Symmetric extends Adjust {
     return _.mapValues(groupDataArray, (dataArray) => this.getDimMaxValue(dataArray, yField));
   }
 
-  private getDimMaxValue(mergeData: DataPointType[], dim: string): number {
+  private getDimMaxValue(mergeData: Data[], dim: string): number {
     // 所有的 value 值
     const dimValues = _.map(mergeData, (data) => _.get(data, dim, []));
     // 将数组打平（dim value 有可能是数组，比如 stack 之后的）
