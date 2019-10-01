@@ -12,9 +12,22 @@ export default abstract class Adjust {
   /** 参与调整的维度 */
   public adjustNames: string[];
   /** x 维度对应的字段 */
-  public readonly xField: string;
+  public xField: string;
   /** y 维度对应的字段 */
-  public readonly yField: string;
+  public yField: string;
+
+  // Dodge 属性
+  /** 调整占单位宽度的比例，例如：占 2 个分类间距的 1 / 2 */
+  public dodgeRatio: number;
+  /** 调整过程中 2 个数据的间距，以 dodgeRatio 为分母 */
+  public marginRatio: number;
+  /** 指定进行 dodge 的字段 */
+  public dodgeBy: string;
+
+  // Stack 属性
+  public height: number;
+  public size: number;
+  public reverseOrder: boolean;
 
   constructor(cfg: AdjustCfg) {
     const { xField, yField, adjustNames = ['x', 'y'] } = cfg;

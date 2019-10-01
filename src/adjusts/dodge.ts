@@ -4,13 +4,6 @@ import { Data, DodgeCfg, Range } from '../interface';
 import Adjust from './adjust';
 
 export default class Dodge extends Adjust {
-  /** 调整占单位宽度的比例，例如：占 2 个分类间距的 1 / 2 */
-  public readonly dodgeRatio: number;
-  /** 调整过程中 2 个数据的间距，以 dodgeRatio 为分母 */
-  public readonly marginRatio: number;
-  /** 指定进行 dodge 的字段 */
-  public readonly dodgeBy: string;
-
   private cacheMap: { [key: string]: any } = {};
   private adjustDataArray: Data[][] = [];
   private mergeData: Data[] = [];
@@ -18,9 +11,10 @@ export default class Dodge extends Adjust {
   constructor(cfg: DodgeCfg) {
     super(cfg);
 
-    const { marginRatio = MARGIN_RATIO, dodgeRatio = DODGE_RATIO } = cfg;
+    const { marginRatio = MARGIN_RATIO, dodgeRatio = DODGE_RATIO, dodgeBy } = cfg;
     this.marginRatio = marginRatio;
     this.dodgeRatio = dodgeRatio;
+    this.dodgeBy = dodgeBy;
   }
 
   public process(groupDataArray: Data[][]): Data[][] {
