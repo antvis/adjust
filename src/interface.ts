@@ -1,5 +1,5 @@
 export interface AdjustCfg {
-  readonly adjustNames: string[];
+  readonly adjustNames?: string[];
   readonly xField?: string;
   readonly yField?: string;
 
@@ -13,22 +13,22 @@ export interface AdjustCfg {
 }
 
 export interface DodgeCfg {
-  readonly adjustNames: string[];
+  readonly adjustNames?: string[];
   readonly xField: string;
-  readonly yField: string;
-  readonly marginRatio: number;
-  readonly dodgeRatio: number;
+  readonly yField?: string;
+  readonly marginRatio?: number;
+  readonly dodgeRatio?: number;
   readonly dodgeBy?: string;
 }
 
 export interface StackCfg {
-  readonly adjustNames: string[];
+  readonly adjustNames?: string[];
   readonly xField: string;
-  readonly yField: string;
+  readonly yField?: string;
 
-  readonly height: number;
-  readonly size: number;
-  readonly reverseOrder: boolean;
+  readonly height?: number;
+  readonly size?: number;
+  readonly reverseOrder?: boolean;
 }
 
 export interface Data {

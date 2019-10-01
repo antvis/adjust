@@ -31,7 +31,7 @@ export default abstract class Adjust {
    * 查看维度是否是 adjust 字段
    * @param dim
    */
-  protected isAdjust(dim: string): boolean {
+  public isAdjust(dim: string): boolean {
     return this.adjustNames.indexOf(dim) >= 0;
   }
 

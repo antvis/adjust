@@ -1,8 +1,6 @@
-import { expect } from 'chai';
 import { getAdjust } from '../../src/index';
 
-describe('first dodge next stack', function() {
-
+describe('first dodge next stack', () => {
   const data = [
     { a: 1, b: 1, c: 1 },
     { a: 1, b: 1, c: 2 },
@@ -14,31 +12,30 @@ describe('first dodge next stack', function() {
     { a: 2, b: 2, c: 2 },
   ];
 
-  it('dodge adjust', function() {
+  it('dodge adjust', () => {
     const Dodge = getAdjust('dodge');
     const adjust = new Dodge({
       xField: 'a',
       dodgeBy: 'b',
-      adjustNames: [ 'x' ],
+      adjustNames: ['x'],
     });
-    const [ newData ] = adjust.process([ data ]);
-    expect(newData[0].a).to.be.equal(newData[1].a);
+    const [newData] = adjust.process([data]);
+    expect(newData[0].a).toEqual(newData[1].a);
   });
 
-  it('stack adjust', function() {
+  it('stack adjust', () => {
     const Stack = getAdjust('stack');
     const adjust = new Stack({
       xField: 'a',
       dodgeBy: 'b',
       yField: 'c',
     });
-    adjust.process([ data ]);
-    expect(data[0].c[1]).eql(data[1].c[0]);
+    adjust.process([data]);
+    expect(data[0].c[1]).toEqual(data[1].c[0]);
   });
-
 });
 
-describe('first stack next symmetric', function() {
+describe('first stack next symmetric', () => {
   const data = [
     { a: 1, b: 2, c: 1 },
     { a: 1, b: 3, c: 2 },
@@ -55,9 +52,9 @@ describe('first stack next symmetric', function() {
     yField: 'b',
   });
 
-  let newData = adjust.process([ data ]);
+  let newData = adjust.process([data]);
 
-  it('symmetric', function() {
+  it('symmetric', () => {
     const Symmetric = getAdjust('Symmetric');
 
     const sAdjust = new Symmetric({
@@ -67,6 +64,6 @@ describe('first stack next symmetric', function() {
 
     newData = sAdjust.process(newData);
 
-    expect(newData[0][0].b).eql([ 0.5, 2.5 ]);
+    expect(newData[0][0].b).toEqual([0.5, 2.5]);
   });
 });
