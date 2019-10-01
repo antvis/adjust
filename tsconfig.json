@@ -3,18 +3,14 @@
     "module": "commonjs",
     "declaration": true,
     "sourceMap": true,
+    "target": "es5",
     "outDir": "lib",
     "importHelpers": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "dom",
-      "es7"
-    ]
+    "lib": ["esnext", "dom"],
+    "baseUrl": "src",
+    "types": ["jest"]
   },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*"
-  ]
+  "include": ["src"]
 }
