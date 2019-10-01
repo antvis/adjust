@@ -5,10 +5,6 @@ import Adjust from './adjust';
 const Cache = _.Cache;
 
 export default class Stack extends Adjust {
-  public readonly height: number;
-  public readonly size: number;
-  public readonly reverseOrder: boolean;
-
   constructor(cfg: StackCfg) {
     super(cfg);
 
