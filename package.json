@@ -1,6 +1,6 @@
 {
   "name": "@antv/adjust",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "The adjust module for G2, F2.",
   "main": "lib/index.js",
   "module": "esm/index.js",
@@ -29,7 +29,7 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@antv/scale": "~0.2.0",
+    "@antv/scale": "~0.3.0",
     "@types/jest": "^24.0.18",
     "husky": "^3.0.4",
     "jest": "^24.9.0",
