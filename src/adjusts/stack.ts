@@ -46,7 +46,7 @@ export default class Stack extends Adjust {
     return groupedDataArray.map((dataArray) => {
       return dataArray.map((data) => {
         const x: number = _.get(data, xField, 0);
-        let y: number = _.get(data, yField);
+        let y: number = _.get(data, [yField]);
 
         const xKey = x.toString();
 
