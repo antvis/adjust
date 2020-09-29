@@ -19,6 +19,14 @@ export interface DodgeCfg {
   readonly marginRatio?: number;
   readonly dodgeRatio?: number;
   readonly dodgeBy?: string;
+  readonly intervalPadding?: number;
+  readonly dodgePadding?: number;
+  readonly xDimensionLength?: number;
+  readonly groupNum?: number;
+  readonly defaultSize?: number,
+  readonly maxColumnWidth?: number,
+  readonly minColumnWidth?: number,
+  readonly columnWidthRatio?: number,
 }
 
 export interface StackCfg {
