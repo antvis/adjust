@@ -51,6 +51,25 @@ describe('adjust dodge', () => {
       const obj2 = d1[1];
       expect(obj2.a).toBe(1.8125);
     });
+
+    it('pixel interval padding and dodge padding', () => {
+      // 测试像素级组间距和组内间距的配置计算结果
+      const adjust = new Dodge({
+        xField: 'a',
+        adjustNames: ['x'],
+        intervalPadding: 0,
+        dodgePadding: 0,
+        xDimensionLength: 180, // 计算归一化组内和组间距
+        groupNum: 2,
+      });
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.75);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.75);
+    })
   });
 
   describe('default adjust some has three', () => {
