@@ -52,16 +52,12 @@ describe('adjust dodge', () => {
       expect(obj2.a).toBe(1.8125);
     });
 
-    it('pixel interval padding and dodge padding', () => {
-      // 测试像素级组间距和组内间距的配置计算结果
-      const adjust = new Dodge({
-        xField: 'a',
-        adjustNames: ['x'],
-        intervalPadding: 0,
-        dodgePadding: 0,
-        xDimensionLength: 180, // 计算归一化组内和组间距
-        groupNum: 2,
-      });
+    // 测试像素级组间距和组内间距的配置计算结果
+    it('pixel interval padding is 0px and dodge padding is 0px', () => {
+      adjust.intervalPadding = 0;
+      adjust.dodgePadding = 0;
+      adjust.xDimensionLegenth = 100;
+      adjust.groupNum = 2;
       newGroupData = adjust.process(groupData);
       d1 = newGroupData[0];
       const obj1 = d1[0];
@@ -69,6 +65,127 @@ describe('adjust dodge', () => {
 
       const obj2 = d1[1];
       expect(obj2.a).toBe(1.75);
+    })
+
+    it('pixel interval padding is 10px and dodge padding is 0px', () => {
+      adjust.intervalPadding = 10;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.775);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.775);
+    })
+
+    it('pixel interval padding is 20px and dodge padding is 0px', () => {
+      adjust.intervalPadding = 20;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.8);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.8);
+    })
+
+    it('pixel interval padding is 10px and dodge padding is 10px', () => {
+      adjust.intervalPadding = 10;
+      adjust.dodgePadding = 10;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBeCloseTo(0.725);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBeCloseTo(1.725);
+    })
+
+    it('set pixel interval paddingwith minColumnWidth', () => {
+      adjust.minColumnWidth = 20;
+      adjust.intervalPadding = 30;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.775);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.775);
+    })
+
+    it('set pixel dodge padding with minColumnWidth', () => {
+      adjust.minColumnWidth = 20;
+      adjust.dodgePadding = 30;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBeCloseTo(0.675);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBeCloseTo(1.675);
+    })
+
+    it('set pixel interval padding with maxColumnWidth', () => {
+      adjust.maxColumnWidth = 10;
+      adjust.intervalPadding = 0;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.6);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.6);
+    })
+
+    it('set pixel dodge padding with maxColumnWidth', () => {
+      adjust.maxColumnWidth = 10;
+      adjust.dodgePadding = 0;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.75);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.75);
+    })
+
+    it('set pixel interval padding with columnWidthRatio', () => {
+      adjust.columnWidthRatio = 0.6;
+      adjust.intervalPadding = 10;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBe(0.775);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBe(1.775);
+    })
+
+    it('set pixel interval padding with columnWidthRatio', () => {
+      adjust.columnWidthRatio = 0.6;
+      adjust.dodgePadding = 10;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBeCloseTo(0.725);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBeCloseTo(1.725);
+    })
+
+    it('set pixel interval padding and dodge padding with maxColumnWidth and columnWidthRatio', () => {
+      // 同时配置像素级组间距和组内间距时，最大最小柱宽限制和columnWidthRatio不生效
+      adjust.intervalPadding = 10;
+      adjust.dodgePadding = 10;
+      adjust.columnWidthRatio = 0.6;
+      adjust.maxColumnWidth = 10;
+      newGroupData = adjust.process(groupData);
+      d1 = newGroupData[0];
+      const obj1 = d1[0];
+      expect(obj1.a).toBeCloseTo(0.725);
+
+      const obj2 = d1[1];
+      expect(obj2.a).toBeCloseTo(1.725);
     })
   });
 
