@@ -29,6 +29,25 @@ export default abstract class Adjust {
   public size: number;
   public reverseOrder: boolean;
 
+  /** 像素级组间距 */
+  public intervalPadding: number;
+  /** 像素级组内间距 */
+  public dodgePadding: number;
+  /** x维度长度，计算归一化padding使用 */
+  public xDimensionLegenth: number;
+  /** 分组数 */
+  public groupNum: number;
+
+  // 图形宽度相关配置
+  /** 用户配置宽度 */
+  public defaultSize: number;
+  /** 最大宽度约束 */
+  public maxColumnWidth: number;
+  /** 最小宽度约束 */
+  public minColumnWidth: number;
+  /** 宽度比例 */
+  public columnWidthRatio: number;
+
   constructor(cfg: AdjustCfg) {
     const { xField, yField, adjustNames = ['x', 'y'] } = cfg;
 
