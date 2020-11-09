@@ -323,4 +323,62 @@ describe('adjust dodge', () => {
       expect(d1[0].a).toBe(d1[1].a);
     });
   });
+
+  describe('adjust custom offset', () => {
+    const data = [
+      { a: 1, b: 1, c: 1 },
+      { a: 1, b: 1, c: 2 },
+      { a: 1, b: 2, c: 1 },
+      { a: 1, b: 2, c: 2 },
+      { a: 2, b: 1, c: 1 },
+      { a: 2, b: 1, c: 2 },
+      { a: 2, b: 2, c: 1 },
+      { a: 2, b: 2, c: 2 },
+    ];
+
+    const adjust = new Dodge({
+      xField: 'a',
+      dodgeBy: 'b',
+      adjustNames: ['x'],
+      customOffset: 4
+    });
+
+    const groupData = group(data, 'a');
+    it('adjust', () => {
+      const newGroupData = adjust.process(groupData);
+      const d1 = newGroupData[0];
+      expect(d1[0].a).toBe(5);
+      expect(d1[0].a).toBe(d1[1].a);
+    });
+  });
+  
+  describe('adjust custom offset callback', () => {
+    const data = [
+      { a: 1, b: 1, c: 1 },
+      { a: 1, b: 1, c: 2 },
+      { a: 1, b: 2, c: 1 },
+      { a: 1, b: 2, c: 2 },
+      { a: 2, b: 1, c: 1 },
+      { a: 2, b: 1, c: 2 },
+      { a: 2, b: 2, c: 1 },
+      { a: 2, b: 2, c: 2 },
+    ];
+
+    const adjust = new Dodge({
+      xField: 'a',
+      dodgeBy: 'b',
+      adjustNames: ['x'],
+      customOffset: () => { 
+        return 6;
+      }
+    });
+
+    const groupData = group(data, 'a');
+    it('adjust', () => {
+      const newGroupData = adjust.process(groupData);
+      const d1 = newGroupData[0];
+      expect(d1[0].a).toBe(6);
+      expect(d1[0].a).toBe(d1[1].a);
+    });
+  });
 });
