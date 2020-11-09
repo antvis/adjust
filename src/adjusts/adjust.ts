@@ -23,6 +23,8 @@ export default abstract class Adjust {
   public marginRatio: number;
   /** 指定进行 dodge 的字段 */
   public dodgeBy: string;
+  /** 自定义 offset */
+  public customOffset: ((data: any, range: any) => number) | number;
 
   // Stack 属性
   public height: number;

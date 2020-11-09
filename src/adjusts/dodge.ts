@@ -22,6 +22,7 @@ export default class Dodge extends Adjust {
       maxColumnWidth,
       minColumnWidth,
       columnWidthRatio,
+      customOffset
     } = cfg;
     this.marginRatio = marginRatio;
     this.dodgeRatio = dodgeRatio;
@@ -34,6 +35,7 @@ export default class Dodge extends Adjust {
     this.maxColumnWidth = maxColumnWidth;
     this.minColumnWidth = minColumnWidth;
     this.columnWidthRatio = columnWidthRatio;
+    this.customOffset = customOffset;
   }
 
   public process(groupDataArray: Data[][]): Data[][] {
@@ -59,9 +61,10 @@ export default class Dodge extends Adjust {
   }
 
   protected adjustDim(dim: string, values: number[], data: Data[], frameIndex: number): any[] {
+    const { customOffset } = this;
     const map = this.getDistribution(dim);
     const groupData = this.groupData(data, dim); // 根据值分组
-
+    
     _.each(groupData, (group, key) => {
       let range: Range;
 
@@ -79,7 +82,12 @@ export default class Dodge extends Adjust {
         const value = d[dim];
         const valueArr = map[value];
         const valIndex = valueArr.indexOf(frameIndex);
-        d[dim] = this.getDodgeOffset(range, valIndex, valueArr.length);
+        if (!_.isNil(customOffset)) {
+          const { pre, next } = range;
+          d[dim] = _.isFunction(customOffset) ? customOffset(d, range) : (pre + next) / 2 + customOffset;
+        } else {
+          d[dim] = this.getDodgeOffset(range, valIndex, valueArr.length);
+        }
       });
     });
     return [];

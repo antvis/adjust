@@ -23,10 +23,11 @@ export interface DodgeCfg {
   readonly dodgePadding?: number;
   readonly xDimensionLength?: number;
   readonly groupNum?: number;
-  readonly defaultSize?: number,
-  readonly maxColumnWidth?: number,
-  readonly minColumnWidth?: number,
-  readonly columnWidthRatio?: number,
+  readonly defaultSize?: number;
+  readonly maxColumnWidth?: number;
+  readonly minColumnWidth?: number;
+  readonly columnWidthRatio?: number;
+  readonly customOffset?: ((data: any, range: any) => number) | number;
 }
 
 export interface StackCfg {
