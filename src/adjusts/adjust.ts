@@ -158,7 +158,7 @@ export default abstract class Adjust {
   private getDimValues(mergedData: Data[]): DimValuesMapType {
     const { xField, yField } = this;
 
-    const dimValuesMap: DimValuesMapType = {};
+    const dimValuesMap: DimValuesMapType = _.assign({}, this.dimValuesMap);
 
     // 所有的维度
     const dims = [];
@@ -170,14 +170,13 @@ export default abstract class Adjust {
     }
 
     dims.forEach((dim: string): void => {
+      if (this.dimValuesMap && this.dimValuesMap[dim]) {
+        dimValuesMap[dim] = this.dimValuesMap[dim];
+        return;
+      }
+      debugger;
       // 在每个维度上，所有的值
       dimValuesMap[dim] = _.valuesOfKey(mergedData, dim).sort((v1, v2) => v1 - v2) as number[];
-      if (this.dimValuesMap && this.dimValuesMap[dim]) {
-        if (this.dimValuesMap[dim].length > dimValuesMap[dim].length) {
-          //确保只有某些类别里没有data时才执行
-          dimValuesMap[dim] = this.dimValuesMap[dim];
-        }
-      }
     });
 
     // 只有一维的情况下，同时调整 y，赋予默认值
