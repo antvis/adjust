@@ -174,7 +174,6 @@ export default abstract class Adjust {
         dimValuesMap[dim] = this.dimValuesMap[dim];
         return;
       }
-      debugger;
       // 在每个维度上，所有的值
       dimValuesMap[dim] = _.valuesOfKey(mergedData, dim).sort((v1, v2) => v1 - v2) as number[];
     });
