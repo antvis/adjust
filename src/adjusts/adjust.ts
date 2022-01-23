@@ -50,12 +50,16 @@ export default abstract class Adjust {
   /** 宽度比例 */
   public columnWidthRatio: number;
 
-  constructor(cfg: AdjustCfg) {
-    const { xField, yField, adjustNames = ['x', 'y'] } = cfg;
+  /** 用户自定义的dimValuesMap */
+  public dimValuesMap: DimValuesMapType;
+
+  constructor(cfg: AdjustCfg & { dimValuesMap?: DimValuesMapType }) {
+    const { xField, yField, adjustNames = ['x', 'y'], dimValuesMap } = cfg;
 
     this.adjustNames = adjustNames;
     this.xField = xField;
     this.yField = yField;
+    this.dimValuesMap = dimValuesMap;
   }
 
   // 需要各自实现的方法
@@ -154,7 +158,7 @@ export default abstract class Adjust {
   private getDimValues(mergedData: Data[]): DimValuesMapType {
     const { xField, yField } = this;
 
-    const dimValuesMap: DimValuesMapType = {};
+    const dimValuesMap: DimValuesMapType = _.assign({}, this.dimValuesMap);
 
     // 所有的维度
     const dims = [];
@@ -166,6 +170,9 @@ export default abstract class Adjust {
     }
 
     dims.forEach((dim: string): void => {
+      if (dimValuesMap && dimValuesMap[dim]) {
+        return;
+      }
       // 在每个维度上，所有的值
       dimValuesMap[dim] = _.valuesOfKey(mergedData, dim).sort((v1, v2) => v1 - v2) as number[];
     });
