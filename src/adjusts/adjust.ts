@@ -170,8 +170,7 @@ export default abstract class Adjust {
     }
 
     dims.forEach((dim: string): void => {
-      if (this.dimValuesMap && this.dimValuesMap[dim]) {
-        dimValuesMap[dim] = this.dimValuesMap[dim];
+      if (dimValuesMap && dimValuesMap[dim]) {
         return;
       }
       // 在每个维度上，所有的值
