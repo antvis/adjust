@@ -64,7 +64,7 @@ export default class Dodge extends Adjust {
     const { customOffset } = this;
     const map = this.getDistribution(dim);
     const groupData = this.groupData(data, dim); // 根据值分组
-    
+
     _.each(groupData, (group, key) => {
       let range: Range;
 
@@ -99,38 +99,41 @@ export default class Dodge extends Adjust {
       marginRatio,
       intervalPadding,
       dodgePadding,
+      groupNum,
     } = this;
     const { pre, next } = range;
 
     const tickLength = next - pre;
     let position;
-    // 分多种输入情况
-    if (!_.isNil(intervalPadding) && _.isNil(dodgePadding) && intervalPadding >= 0) {
-      // 仅配置intervalPadding
-      const offset = this.getIntervalOnlyOffset(len, idx);
-      position = pre + offset;
-    } else if (!_.isNil(dodgePadding) && _.isNil(intervalPadding) && dodgePadding >= 0) {
-      // 仅配置dodgePadding
-      const offset = this.getDodgeOnlyOffset(len, idx);
-      position = pre + offset;
-    } else if (
-      !_.isNil(intervalPadding) &&
-      !_.isNil(dodgePadding) &&
-      intervalPadding >= 0 &&
-      dodgePadding >= 0
-    ) {
-      // 同时配置intervalPadding和dodgePadding
-      const offset = this.getIntervalAndDodgeOffset(len, idx);
-      position = pre + offset;
+    if (groupNum > 1) {
+      // 分多种输入情况
+      if (!_.isNil(intervalPadding) && _.isNil(dodgePadding) && intervalPadding >= 0) {
+        // 仅配置intervalPadding
+        const offset = this.getIntervalOnlyOffset(len, idx);
+        position = pre + offset;
+      } else if (!_.isNil(dodgePadding) && _.isNil(intervalPadding) && dodgePadding >= 0) {
+        // 仅配置dodgePadding
+        const offset = this.getDodgeOnlyOffset(len, idx);
+        position = pre + offset;
+      } else if (
+        !_.isNil(intervalPadding) &&
+        !_.isNil(dodgePadding) &&
+        intervalPadding >= 0 &&
+        dodgePadding >= 0
+      ) {
+        // 同时配置intervalPadding和dodgePadding
+        const offset = this.getIntervalAndDodgeOffset(len, idx);
+        position = pre + offset;
+      }
     } else {
       // 默认情况
       const width = (tickLength * dodgeRatio) / len;
       const margin = marginRatio * width;
       const offset =
-      (1 / 2) * (tickLength - len * width - (len - 1) * margin) +
-      ((idx + 1) * width + idx * margin) -
-      (1 / 2) * width -
-      (1 / 2) * tickLength;
+        (1 / 2) * (tickLength - len * width - (len - 1) * margin) +
+        ((idx + 1) * width + idx * margin) -
+        (1 / 2) * width -
+        (1 / 2) * tickLength;
       position = (pre + next) / 2 + offset;
     }
     return position;
@@ -165,7 +168,7 @@ export default class Dodge extends Adjust {
     normalizedDodgePadding = ((1 - (groupNum - 1) * normalizedIntervalPadding) / groupNum - len * geomWidth) / (len - 1);
     const offset =
       ((1 / 2 + idx) * geomWidth + idx * normalizedDodgePadding +
-      (1 / 2) * normalizedIntervalPadding) * groupNum -
+        (1 / 2) * normalizedIntervalPadding) * groupNum -
       normalizedIntervalPadding / 2;
     return offset;
   }
@@ -199,7 +202,7 @@ export default class Dodge extends Adjust {
     normalizedIntervalPadding = (1 - (geomWidth * len + normalizedDodgePadding * (len - 1)) * groupNum) / (groupNum - 1);
     const offset =
       ((1 / 2 + idx) * geomWidth + idx * normalizedDodgePadding +
-      (1 / 2) * normalizedIntervalPadding) * groupNum -
+        (1 / 2) * normalizedIntervalPadding) * groupNum -
       normalizedIntervalPadding / 2;
     return offset;
   }
@@ -216,7 +219,7 @@ export default class Dodge extends Adjust {
     const geomWidth = ((1 - normalizedIntervalPadding * (groupNum - 1)) / groupNum - normalizedDodgePadding * (len - 1)) / len;
     const offset =
       ((1 / 2 + idx) * geomWidth + idx * normalizedDodgePadding +
-      (1 / 2) * normalizedIntervalPadding) * groupNum -
+        (1 / 2) * normalizedIntervalPadding) * groupNum -
       normalizedIntervalPadding / 2;
     return offset;
   }
